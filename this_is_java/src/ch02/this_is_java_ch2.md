@@ -93,4 +93,39 @@
   double result3 = (double) x / (double) y; //0.5
   ```
 - 자바에서 + 연산자의 두 가지 기능
-  1. 
+  1. 피연산자가 모두 숫자: 덧셈 연산
+  2. 피연산자 중 하나가 문자열: 나머지 피연산자도 문자열로 자동 변환되어 문자열 결합 연산
+  - 연산식에서 + 연산자가 연이어 나올 경우->순차적으로 +연산을 수행
+    - 특정 부분을 우선 연산하고 싶다면 괄호()를 이용
+## 10. 문자열을 기본 타입으로 변환
+- String->byte: Byte.parseByte(str)
+- String->short: Short.parseShort(str)
+- String->int: Integer.parseInteger(str)
+- String->long: Long.parseLong(str)
+- String->float: Float.parseFloat(str)
+- String->double: Double.parseDouble(str)
+- String->boolean: Boolean.parseBoolean(str)
+- 기본 타입 값->String: String.valueOf(기본타입값)
+## 11. 변수 사용 범위
+- main() 메소드 블록 안의 다른 중괄호 {} 블록들에서 선언된 변수는 중괄호 {} 블록 내에서만 사용이 가능
+  - 메소드 블록 첫머리에 선언: 메소드 블록 전체에서 사용
+  - 특정 블록 내에서 선언: 특정 블록 내부에서만 사용
+## 12. 콘솔로 변수값 출력
+- `Syste.out.println(리터럴 또는 변수);`
+  - `println(내용);`: 괄호 안의 내용을 출력하고 행을 바꿔라.
+  - `print(내용)`: 괄호 안의 내용을 출력하고 행은 바꾸지 말아라.
+  - `printf("형식 문자열", 값1, 값2, ...)`: 형식 문자열에 맞추어 뒤의 값을 출력해라.
+    - `% [argument_index$] [flag] [width] [.precision] conversion`: [] 안의 값은 생략 가능
+    - conversion: d(정수), f(실수), s(문자열)
+    - argument_index$: 순번, (ex.1$, 2$)
+    - flag: 생략(왼쪽이 공백), -(오른쪽이 공백), 0(공백 대신 0으로 채움)
+    - width: 소수점을 포함한 전체 자릿수
+    - .precision: 소수 이하 자릿수
+    - 특수 문자: \t(탭), \n(줄바꿈), %%(%)
+## 13. 키보드 입력 데이터를 변수에 저장
+- Scanner 타입 변수를 선언, 대입 연산자를 사용하여 new 연산자로 생성한 Scanner 객체를 변수에 대입
+  - `Scanner scanner = new Scanner(System.in);`
+- scanner.nextLine()을 실행하면 enter키가 입력되기 전까지 블로킹(대기)상태가 되며, enter키가 입력되면 지금까지 입력된 모든 내용을 문자열로 읽음  
+  - `String inputData = scanner.nextLine();`
+- ==: 기본 타입(byte, short, int, long, float, double, boolean) 값이 동일한지 비교할 때
+- equals(): String 타입 값이 동일한지 비교할 때 `boolean result = data.equals("문자열")`
