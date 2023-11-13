@@ -110,7 +110,39 @@
 ## 8. 객체를 참조하는 배열
 - 기본 타입 배열은 각 항목에 값을 직접 저장;
 - 참조 타입(클래스, 인터페이스) 배열은 각 항목에 객체의 번지를 저장.
+- ==, != 연산자를 배열 항목이 참조하는 객체가 같은 객체인지 확인
+  - equals() 메서드: 객체 내부의 값(문자열)만 비교할 때
 ## 9. 배열 복사
+- 배열은 한번 생성하면 길이를 변경할 수 없음 -> 더 많은 저장 공간이 필요하다면 더 큰 길이의 배열을 새로 만들고 이전 배열로부터 항목들을 복사해야 함.
+- 배열 복사를 위한 메소드: `System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length);`
 ## 10. 배열 항목 반복을 위한 향상된 for문
+- 자바는 배열 및 컬렉션을 쉽게 처리할 목적으로 변형된 for문을 제공
+- `for(2.타입변수; 1.배열) { 3.실행문 }`: 카운터 변수와 증감식을 사용하지 않음.
+  - 배열에서 가져올 항목이 있을 경우(없을 때는 for문 종료)->타입 변수에 저장->실행문 실행->배열로 되돌아감.
 ## 11. main() 메소드의 String[] 매개변수 용도
+- main() 메소드의 인자로 문자열 배열 형태인 String[] args 매개변수가 필요한 이유
+  - 터미널에서 프로그램 실행 시 요구하는 값이 있는 경우: 값들이 문자열로 취급되어 String[] 배열(args)의 항목값으로 구성됨.
+  - main() 메소드 안에서 입력값을 얻는 방법: `String x = args[0];`, `String y = args[1];` 
+  - main() 메소드 안에서 타입변환하는 방법: `int x = Integer.parseInt(args[0]);`, `int y = Integer.parseInt(args[1]);`
+  - 실행 시 몇 개의 값이 입력되었는지 확인: `if(args.length != 2) { System.out.println("실행 시 두 개의 값이 필요합니다.");}`
 ## 12. 열거(Enum) 타입
+- 열거 타입: 몇 가지로 한정된 값을 갖는 데이터의 타입 
+  - 열거 타입 이름(첫 문자는 대문자, 캐멀 스타일)으로 소스파일을 생성하고 한정된 값을 코드로 정의
+- 열거 상수: 열거 타입으로 사용할 수 있는 한정된 값
+  - 알파벳으로 정의, 대문자로 작성
+  - 여러 단어로 구성될 경우에는 언더바로 연결하는 것이 관례.
+- 열거 타입도 하나의 데이터 타입 -> 변수를 선언하고 사용 -> 변수에 열거 상수를 대입 가능 `[열거타입] [변수] = [열거타입].[열거상수]`
+- 열거 타입 = 참조 타입 -> null을 대입 가능
+- ==, != 연산자를 사용 가능
+- Calendar 클래스: 컴퓨터의 날짜, 요일, 시간을 얻을 때 이용
+```java
+Calendar now = Calendar.getInstance();
+int year = now.get(Calendar.YEAR);
+int month = now.get(Calendar.MONTH) + 1;
+int day = now.get(Calendar.DAY_OF_MONTH);
+int week = now.get(Calendar.DAY_OF_WEEK);
+int hour = now.get(Calendar.HOUR);
+int minute = now.get(Calendar.MINUTE);
+int second = noew.get(Calendar.SECOND);
+```
+> 의문점: Calendar는 클래스(get()메서드를 가지는 클래스)이면서 열거타입이 될 수 있는건가? 
