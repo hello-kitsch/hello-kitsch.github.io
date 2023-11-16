@@ -1,6 +1,6 @@
 ---
 layout: post
-title: StardewValley MultiPlay & create_server
+title: StardewValley MultiPlay & Create Server
 subtitle: 24시간 굴러가는 스타듀밸리 서버 만들기 클론코딩 프로젝트
 category: project
 tags: [toyprj, server, game]
