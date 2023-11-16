@@ -24,3 +24,5 @@ author: Sharon Smith and Barry Simpson
 - VPN(이를테면 하마치 등)을 이용하는 방법이 통신 문제를 해결하는 이유는?
 # 4.
 - 클라우드 서비스를 이용해 24시간 서버를 만들고 VNC를 이용해 돌리는 법 (맨 위의 링크에 구현되어 있음-클론 코딩) 
+
+https://github.com/daattali/beautiful-jekyll.git
