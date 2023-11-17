@@ -509,7 +509,14 @@ def two_sum_3(nums: List[int], target: int) -> List[int]:
     	nums_map[num] = i
     
     for i, num enumerate(nums):
-    	if target - num in nums_map and 
+    	if target - num in nums_map and i != nums_map[target - num]:
+        return [i, nums_map[target - num]]
 
-#4. 
+#4. 조회 구조 개선
+def two_sum_4(nums: List[int], target: int) -> List[int]:
+    nums_map = {}
+    for i, num in enumerate(nums):
+        if target - num in nums_map:
+            return [nums_map[target - num], i]
+        nums_map[num] = i
 ```
