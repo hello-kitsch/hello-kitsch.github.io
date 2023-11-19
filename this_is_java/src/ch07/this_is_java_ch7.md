@@ -48,3 +48,105 @@
 - **protected 생성자가 있는 부모클래스를 상속하는 자식클래스는 `new` 연산자 대신 `super()`로 호출**
 # 7. 타입 변환
 - 클래스의 타입 변환: 상속 관계에 있는 클래스 사이에서 발생
+## 자동 타입 변환
+- 자동적으로 타입 변환이 일어나는 조건
+  - `부모타입 변수 = 자식타입객체`이 성립
+  - `부모타입 변수 = new 자식클래스();`도 가능
+  - 자식은 부모의 특징과 기능을 상속받기 때문에 부모와 동일하게 취급됨.
+  - `Cat cat = new Cat();`, `Animal animal = cat;`
+- 부모 타입으로 자동 타입 변환된 후에는 부모 클래스에 선언된 필드와 메소드만 접근 가능.
+- 다형성: 자식 클래스에서 오버라이딩된 메소드가 존재하는 경우, 부모 메소드 대신 오버라이딩된 메소드가 호출됨.
+## 강제 타입 변환
+- 자식타입은 부모타입으로 자동 변환되지만, 부모타입은 자식타입으로 자동 변환되지 않음 -> 캐스팅 연산자로 강제 타입 변환
+  - `자식타입 변수 = (자식타입) 부모타입객체;`
+- **자식 객체가 부모 타입으로 자동 변환된 후 다시 자식 타입으로 변환할 때**만 강제 타입 변환 사용가능
+  - `Parent parent = new Child(); Child child = (Child) parent;`
+- 자식 객체가 부모 타입으로 자동 변환되면 부모 타입에 선언된 필드와 메소드만 사용 가능하다는 제약이 걸릴 때 = 자식 타입에 선언된 필드와 메소드를 꼭 사용해야할 때 강제 타입 변환을 사용
+# 8. 다형성
+- 사용 방법은 동일하지만 
+  - 프로그램을 구성하는 객체(부품)을 바꾸면 프로그램의 실행 성능이 다르게 나오는 경우
+- 실행 결과가 다양하게 나오는 성질.
+  - 동일한 메소드를 가지고 있음(상속과 자식 객체의 오버라이딩을 통해서)
+- 다형성 <- 자동 타입 변환 + 메소드 오버라이딩
+> 메소드 오버라이딩을 하려면 자동 타입 변환이 필수이므로.
+## 필드 다형성
+- 필드 타입은 동일(=사용 방법 동일)
+- 대입되는 객체가 달라져서 실행 결과가 다양하게 나올 수 있는 것.
+> 부모 타입으로 선언된 객체에 다형성(자동 타입 변환+메소드 오버라이딩)이 입혀지는 것.
+```java
+public class Car {
+   public Tire tire;
+   public void run() {
+      tire.roll()
+   }
+}
+
+Car myCar = new Car();
+//case1
+myCar.tire = new HankookTire();
+myCar.run();
+//case2
+myCar.tire = new KumhoTire();
+myCar.run();
+```
+## 매개변수 다형성
+- 다형성은 필드보다 메소드를 호출시 클래스 타입의 매개변수를 가지고 있을때(자식 객체도 제공 가능) 많이 발생.
+```java
+public class Driver {
+    public void drive(Vehicle vehicle) {
+        vehicle.run();
+    }
+}
+
+Driver driver = new Driver();
+Vehicle vehicle = new Vehicle();
+driver.drive(vehicle);
+//Bus클래스는 Vehicle 클래스를 상속함
+Driver driver= new Driver();
+Bus bus = new Bus();
+driver.drive(bus);
+```
+# 9. 객체 타입 확인
+- 매개변수의 다형성에서 실제로 어떤 객체가 매개값으로 제공되었는지 확인하는 방법
+  - 변수가 참조하는 객체의 타입 확인: **instanceof 연산자**
+    - `boolean result = 객체 instanceof 타입;`: 일치하면 true, 불일치하면 false
+```java
+//Java 12 이전의 문법
+public void method(Parent parent) {
+    if(parent instanceof Child) {
+        Child child = (Child) parent;
+        ...
+    }
+}
+//Java 12부터 instanceof 연산 결과가 true일 경우, 우측 타입 변수를 사용 가능
+if(parent instanceof Child child) {
+    ...
+}
+```
+# 10. 추상 클래스
+- (사전적 의미) 추상: 실체 간에 공통되는 특성을 추출한 것
+## 추상 클래스란?
+- 실체 클래스: 객체를 생성할 수 있는 클래스
+- 추상 클래스: 실체 클래스들의 공통적인 필드나 메소드를 추출해서 선언한 클래스
+  - 추상 클래스는 실체 클래스의 부모 역할로만 사용됨 -> extends 뒤에만 올 수 있음 
+  - new연산자를 사용해서 객체를 직접 생성할 수 없음. 
+## 추상 클래스 선언
+- 클래스 선언에 abstract 키워드를 붙임
+```java
+public abstract class 클래스명 { 
+    //필드
+    //생성자
+    //메소드
+}
+```
+- 추상클래스도 필드, 메소드, 생성자(super()로 호출되기 때문에 필요)를 선언 가능
+## 추상 메소드와 재정의
+- 자식 클래스들이 가지고 있는 공통 메소드를 뽑아내 추상 클래스로 작성 시, 메소드 선언부(리턴타입, 메소드명, 매개변수)만 동일하고 실행내용은 자식 클래스마다 달라야하는 경우 -> 추상 클래스는 추상 메소드를 선언
+  - `abstract 리턴타입 메소드명(매개변수, ...);`
+  - 추상 메소드는 자식 클래스에서 반드시 재정의(오버라이딩)해서 실행 내용을 채워야 함.
+# 11. 봉인된 클래스
+- final 클래스를 제외한 모든 클래스는 부모 클래스가 될 수 있음 -> java 15부터 무분별한 자식 클래스 생성을 방지하기 위한 봉인된 클래스가 도입됨.
+  - Person 클래스의 자식 클래스는 Employee와 Manager만 가능하도록 제한하는 구문: `public sealed class Person permits Employee, Maneger { ... }`
+  - 봉인된 클래스를 상속하는 자식 클래스는 final 또는 non-sealed 키워드로 선언
+    - `public final class Employee extends Person { ... }`: 더 이상 상속 불가
+    - `public non-sealed class Manager extends Person { ... }`: 봉인을 해제
