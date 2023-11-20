@@ -24,11 +24,8 @@ navbar-links:
   Category:
     - Question: "/category/question"
     - Project: "/category/project"
-    - CS: "/category/cs"
-    - WEB: "/category/web"
-    - ML: "/category/ml"
-    - PL: "/category/pl"
-    - PS: "/category/ps"
+    - Course: "/category/course"
+    - Knowledge: "/category/knowledge"
   Author's home: "https://github.com/hello-kitsch"
 
 ################

@@ -2,7 +2,7 @@
 layout: post
 title: Markdown math expression grammer
 subtitle: 마크다운 수식 표현 문법 정리
-category: pl
+category: knowledge
 tags: [markdown, expression]
 comments: true
 use_math: true

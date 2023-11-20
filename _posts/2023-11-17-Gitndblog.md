@@ -2,7 +2,7 @@
 layout: post
 title: Git & Github and blog
 subtitle: 로그를 남기는 법
-category: project
+category: question
 tags: [git, github, blog, log]
 comments: true
 use_math: true
