@@ -5,6 +5,7 @@ subtitle: 마크다운 수식 표현 문법 정리
 category: pl
 tags: [markdown, expression]
 comments: true
+use_math: true
 author: jyesoon
 ---
 

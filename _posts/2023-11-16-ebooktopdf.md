@@ -5,6 +5,7 @@ subtitle: 삽질의 연속
 category: project
 tags: [toyprj, ebook, DRM, pdf, macro]
 comments: true
+use_math: true
 author: jyesoon
 ---
 
