@@ -21,6 +21,7 @@ author: jyesoon
 [파이썬 키보드 인풋 제어](https://wikidocs.net/85709)
 [ebookToPdf github](https://github.com/eastshine12/eBookToPdf/blob/master/eBookToPdf.py)  
 [GUI 개발 QT6 가이드](https://wikidocs.net/170600)  
+
 ## Bonus: 이미지에서 텍스트 인식(OCR)
 [Tesseract OCR introduction](https://builtin.com/data-science/python-ocr)  
 [Tesseract OCR 1](https://yunwoong.tistory.com/58)  
@@ -39,6 +40,7 @@ author: jyesoon
 - 리디북스: 자체 DRM
 - 구글북스,소니북스,코보,오버드라이브: adobe drm
 - 아마존: 자체 DRM  
+
 ## ebook 뷰어 구현 코드...
 - 를 분석해서 DRM을 복호화해서 제거  
 [리디DRM분석제거](https://tonhnegod.tistory.com/entry/%EC%9B%B9%ED%8E%98%EC%9D%B4%EC%A7%80%EC%97%90%EC%84%9C-PDF-%ED%8C%8C%EC%9D%BC-%EB%B3%B4%EC%97%AC%EC%A3%BC%EA%B8%B0-PDF-%EB%B7%B0%EC%96%B4-%EB%84%A3%EA%B8%B0)  
