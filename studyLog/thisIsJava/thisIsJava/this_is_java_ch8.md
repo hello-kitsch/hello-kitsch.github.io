@@ -102,5 +102,5 @@ public class Car {
 }
 
 Car myCar = new Car();
-
+myCar.tire1 = new KumhoTire();
 ```
