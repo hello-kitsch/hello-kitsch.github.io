@@ -103,6 +103,7 @@ public class Car {
 
 Car myCar = new Car();
 myCar.tire1 = new KumhoTire();
+<<<<<<< HEAD
 ```
 ## 매개변수의 다형성
 - 메소드 호출 시 매개값을 다양화하기 위해
@@ -149,3 +150,6 @@ driver.drive(bus);
 - `public sealed interface InterfaceA permits InterfaceB { ... }`: interfaceA의 자식 인터페이스는 interfaceB만 가능
 - `public non-sealed interface InterfaceB extends InterfaceA { ... }`: interfaceA를 상속하는 interfaceB는 `non-sealed` 키워드로 선언하여 봉인을 해제하거나 `sealed` 키워드로 봉인 인터페이스로 선언
   - 봉인을 해제한 경우 다른 자식 인터페이스를 만들 수 있음. `public interface InterfaceC extends InterfaceB { ... }`
+=======
+```
+>>>>>>> d7a4aba8553773cc8b861351342780aae36f9b91
