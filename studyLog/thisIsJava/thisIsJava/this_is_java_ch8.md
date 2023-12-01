@@ -102,5 +102,50 @@ public class Car {
 }
 
 Car myCar = new Car();
-
+myCar.tire1 = new KumhoTire();
 ```
+## 매개변수의 다형성
+- 메소드 호출 시 매개값을 다양화하기 위해
+  - 매개변수 타입을 부모 타입으로 선언, 호출 시 자식 객체 대입
+  - 매개변수 타입을 인터페이스로 선언, 호출 시 구현 객체 대입
+```java
+public interface Vehicle {
+    void run();
+}
+
+public class Driver {
+    void drive(Vehicle vehicle) {
+        vehicle.run();
+    }
+}
+
+public class Bus implements Vehicle {
+    void run() {
+        //재정의
+    }
+}
+
+Driver driver = new Driver();
+Bus bus = new Bus();
+driver.drive(bus);
+```
+# 12. 객체 타입 확인
+- 상속에서 객체 타입을 확인하기 위해 instanceof 연산자를 사용
+- 인터페이스에서도 인터페이스변수에 대입된 객체를 확인하기 위해 instanceof 연산자를 사용
+  - ex. 메소드의 매개변수가 인터페이스 타입 -> 메소드 호출 시 매개값은 해당 인터페이스를 구현하는 모든 객체가 될 수 있음 -> 매개값이 특정 구현 객체일 경우에만 강제 타입 변환을 원하는 경우
+  ```java
+  public void method(Vehicle vehicle) {
+      if(vehicle instanceof Bus) {
+          Bus bus = (Bus) vehicle;
+      }
+  }
+  //Java 12부터는 instanceof 연산 결과가 true인 경우 우측 타입 변수를 사용 가능
+  if(vehicle instanceof Bus bus) {
+      //bus 변수 사용
+  }
+  ```
+# 13. 봉인된 인터페이스
+- 무분별한 자식 인터페이스 생성을 방지하기 위해 봉인된 인터페이스를 사용 가능
+- `public sealed interface InterfaceA permits InterfaceB { ... }`: interfaceA의 자식 인터페이스는 interfaceB만 가능
+- `public non-sealed interface InterfaceB extends InterfaceA { ... }`: interfaceA를 상속하는 interfaceB는 `non-sealed` 키워드로 선언하여 봉인을 해제하거나 `sealed` 키워드로 봉인 인터페이스로 선언
+  - 봉인을 해제한 경우 다른 자식 인터페이스를 만들 수 있음. `public interface InterfaceC extends InterfaceB { ... }`
