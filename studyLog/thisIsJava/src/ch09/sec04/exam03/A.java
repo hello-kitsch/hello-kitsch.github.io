@@ -10,6 +10,7 @@ public class A {
 
                 //arg = 2
                 //var = 2 
+                //로컬 변수 수정x
             }
         }
         B b = new B();
@@ -17,6 +18,6 @@ public class A {
 
         //arg = 3;
         //var = 3;
-        //로컬 변수를 
+        //로컬 변수를 수정x
     }
 }
