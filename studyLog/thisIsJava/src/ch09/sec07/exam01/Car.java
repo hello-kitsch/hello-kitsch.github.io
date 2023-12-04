@@ -14,6 +14,7 @@ public class Car {
         tire1.roll();
         tire2.roll();
     }
+    
     //로컬 변수를 이용한 메소드
     public void run2() {
         Tire tire = new Tire() {

@@ -26,7 +26,6 @@ navbar-links:
     - Project: "/category/project"
     - Course: "/category/course"
     - Knowledge: "/category/knowledge"
-    - Sad_but_Hope: "/category/sadbuthope"
   Author's home: "https://github.com/hello-kitsch"
 
 ################
