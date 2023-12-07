@@ -89,4 +89,25 @@ try(fis1; fis2) {
 }
 ```
 # 5. 예외 떠넘기기
+- 메소드 내부에서 예외 발생 시,
+  - try-catch 블록으로 예외를 처리
+  - 메소드를 호출한 곳으로 예외를 떠넘길 수 있음 -> `throws`키워드
+    - `리턴타입 메소드명(매개변수, ...) throws 예외클래스1, 예외클래스2, ... { ... }`
+    - 메소드를 호출하는 곳에서 예외를 받아 처리해야함.
+    - 나열해야할 예외 클래스가 많은 경우: `throws Exception`, `throws Throwable`만으로 모든 예외를 떠넘길 수 있음
+    - main() 메소드에서 throws 키워드를 사용해 예외를 떠넘기는 경우: JVM이 최종적으로 예외처리(예외의 내용을 콘솔에 출력)
+```java
+public void method1() {
+    try {
+        method2();
+    } catch(ClassNotFoundException e) {
+        System.out.println("예외 처리: " + e.getMessage());
+    }
+}
+
+public void method2() throws ClassNotFoundException {
+    Class.forName("java.lang.String2");
+}
+```
+
 # 6. 사용자 정의 예외
