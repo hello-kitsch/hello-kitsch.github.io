@@ -109,5 +109,23 @@ public void method2() throws ClassNotFoundException {
     Class.forName("java.lang.String2");
 }
 ```
-
 # 6. 사용자 정의 예외
+- 예) 은행 뱅킹 프로그램에서 표준 라이브러리에는 존재하지 않는 잔고 부족 예외를 발생시킬 필요가 있음 -> 직접 예외 클래스를 정의해서 사용(사용자 정의 예외)
+## 사용자 정의 예외
+- 일반 예외(컴파일러가 체크): Exception의 자식 클래스로 선언
+- 실행 예외(컴파일러가 체크하지 않음): RuntimeException의 자식 클래스로 선언
+```java
+public class XXXException extends [ Exception | RuntimeException ] {
+    //기본 생성자
+    public XXXException() {
+    }
+    //예외 메시지를 입력받는 생성자
+    public XXXException(String message) { 
+        super(message); //예외 메시지는 부모 생성자 매개값으로 넘겨 예외 객체의 공통 메소드인 getMessage()의 리턴값으로 사용.
+    }
+}
+```
+## 예외 발생 시키기
+- 자바~제공 표준 예외/사용자 정의 예외를 직접 코드에서 발생 <- `throw` 키워드와 함께 예외 객체를 제공(`new Exception()`)
+  - 예외 원인 메시지를 제공하려면 생성자 매개값으로 전달(`throw new Exception("예외메시지")`)
+  - throw된 예외를 직접 `try-catch`블록으로 처리 OR 메소드를 호출한 곳에서 예외를 처리하도록 `throws`키워드로 떠넘김(대부분)
