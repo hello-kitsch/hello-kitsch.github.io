@@ -21,7 +21,10 @@ public class Student {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Student target) {
-
+            if(no == target.getNo() && name.equals(target.getName())) {
+                return true;
+            }
         }
+        return false;
     }
 }
