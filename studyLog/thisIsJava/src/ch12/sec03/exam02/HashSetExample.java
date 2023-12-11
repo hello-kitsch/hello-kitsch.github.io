@@ -1,4 +1,4 @@
-package ch12.sec03.exan02;
+package ch12.sec03.exam02;
 
 import java.util.HashSet;
 

@@ -56,15 +56,49 @@
 - 두 객체가 동등한지 비교할 때 주로 사용 - equals() 메소드와 용도 비슷, 객체의 데이터를 기준으로 재정의하여 새로운 정수값을 리턴하도록 하는 것이 일반적.
   - hashCode()가 리턴하는 정수값이 같은지를 확인 -> equals()메소드가 true를 리턴하는지를 확인(같이 사용)
 ## 객체 문자 정보
-- Object의 toString() 메소드: 객체의 문자 정보(객체를 문자열로 표현한 값)를 리턴, `클래스명@16진수해시코드`
+- Object의 `toString()` 메소드: 객체의 문자 정보(객체를 문자열로 표현한 값)를 리턴, `클래스명@16진수해시코드`
 - 객체의 문자 정보가 중요한 경우, Object의 toString() 메소드를 재정의하여 간결/유익한 정보를 리턴
   - Date 클래스: 현재 날짜와 시간, String 클래스: 저장된 문자열을 리턴
 - `System.out.println()`메소드는 매개값이
   - 기본타입/문자열인 경우: 해당 값을 그대로 출력
   - 객체인 경우: 객체의 toString() 메소드를 호출하여 리턴값을 출력
 ## 레코드 선언
-- 레코드: 데이터 전달을 위한 Data Transfer Object를 작성 시 반복적으로 사용되는 코드를 줄이기 위해 Java 14부터 레코드가 도입됨
-- 
+- 레코드: 데이터 전달을 위한 Data Transfer Object(DTO)를 작성 시 반복적으로 사용되는 코드를 줄이기 위해 Java 14부터 레코드가 도입됨
+  - 변수의 타입과 이름을 이용해 private final 필드가 자동 생성됨
+  - 생성자 및 Getter 메소드가 자동으로 추가됨.
+  - hashCode(), equals(), toString() 메소드를 재정의한 코드도 자동으로 추가됨.
+```java
+public record Person(String name, int age) {
+}
+//와 아래 코드는 같음
+public class Person {
+    private final String name;
+    private final int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String name() { return this.name; }
+    public String age() { return this.age; }
+
+    @Override
+    public int hashCode() { ... }
+    
+    @Override
+    public boolean equals(Object obj) { ... }
+
+    @Override
+    public String toString() { ... }
+}
+```
+## 롬복 사용하기
+- 롬복 Lombok: JDK에 포함된 표준 라이브러리는 아님, 개발자들이 즐겨쓰는 자동 코드 생성 라이브러리
+  - 레코드와 마찬가지로 DTO 클래스 작성 시 Getter, Setter, hashcode(), equals(), toString()를 자동 생성
+    - 필드가 final이 아님
+    - Getter: getXxx(isXxx), Setter: setXxx로 생성됨.
+  - `https://projectlombok.org/download` -> 프롬프트(관리자 권한 실행)에서 다운받은 jar파일이 있는 곳으로 이동하여 명령어 실행 `java -jar lombok.jar`
 # 4. System 클래스
 # 5. 문자열 클래스
 # 6. 포장 클래스
