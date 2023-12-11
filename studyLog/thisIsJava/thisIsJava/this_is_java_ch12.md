@@ -99,7 +99,41 @@ public class Person {
     - 필드가 final이 아님
     - Getter: getXxx(isXxx), Setter: setXxx로 생성됨.
   - `https://projectlombok.org/download` -> 프롬프트(관리자 권한 실행)에서 다운받은 jar파일이 있는 곳으로 이동하여 명령어 실행 `java -jar lombok.jar`
+  - lib폴더를 생성해 lombok.jar 파일을 복사, 해당 파일을 클릭해 Build Path -> Add to Build Path를 선택(Referenced Libraries에 추가됨)
+  - `import lombok.Data`, `@Data` 어노테이션을 선언하고 클래스를 선언(필드 선언) -> 기본 생성자, Getter, Setter, hashCode(), equals(), toString() 메소드가 자동 생성됨
+  - 이외의 사용 가능한 어노테이션 종류
+    - `@NoArgsConstructor`: 기본(매개변수가 없는) 생성자 포함
+    - `@AllArgsConstructor`: 모든 필드를 초기화시키는 생성자 포함
+    - `@RequiredArgsConstructor`: 기본적으로 매개변수가 없는 생성자(final 또는 @NonNull이 붙은 필드가 있다면 이것들만 초기화시키는 생성자) 포함
+      - NonNull: final은 초기화 후 변경할 수 없고 Setter가 만들어지지 않지만, NonNull은 Null이 아닌 다른 값으로 Setter를 통해 변경 가능
+    - `@Getter`: Getter 메소드 포함
+    - `@Setter`: Setter 메소드 포함
+    - `@EqualsAndHashCode`: equals()와 hashCode() 메소드 포함
+    - `@ToString`: toString() 메소드 포함
+   - `@Data`어노테이션 =  `@RequiredArgsConstructor`, `@Getter`, `@Setter`, `@EqualsAndHashCode`, `@ToString`을 합친 것
 # 4. System 클래스
+- 운영체제 상에서 바로 실행x, JVM 위에서 실행o -> 운영체제의 모든 기능을 자바 코드로 직접 접근하기 어려움 -> java.lang.System 클래스를 이용해 일부 기능을 이용
+- System 클래스의 정적 필드
+  - out: 콘솔에 문자 출력
+  - err: 콘솔에 에러 내용 출력
+  - in: 키보드 입력
+- System 클래스의 메소드
+  - exit(int status): 프로세스 종료
+  - currentTimeMillis(): 현재 시간을 밀리초 단위의 long값으로 리턴
+  - nanoTime(): 현재 시간을 나노초 단위의 long값으로 리턴
+  - getProperty(): 운영체제와 사용자 정보 제공
+  - getenv(): 운영체제의 환경 변수 정보 제공
+## 콘솔 출력
+- out, err(빨간색 출력) 필드를 이용해 콘솔에 원하는 문자열을 출력 가능
+## 키보드 입력
+- in 필드를 이용해 키보드로부터 입력된 키를 읽음
+- `int keyCode = System.int.read();`: 입력된 키의 코드값을 얻을 수 있음. Enter키를 누르기 전까지는 대기 상태, 누르는 동시에 입력했던 키들을 하나씩 읽음.
+  - read()는 IOException이 발생할 수 있는 코드 -> 예외 처리가 필요
+## 프로세스 종료
+- 운영체제는 실행 중인 프로그램을 프로세스로 관리: 자바 프로그램 시작 -> JVM 프로세스 실행 -> main() 메소드를 호출
+  - 프로세스를 강제 종료하고 싶다면 `System.exit(int status)` 메소드를 사용
+  - 종료 상태값인 int 매개값이 필요: 정상종료(0), 비정상 종료(1, -1)
+> 종료 상태값은 System에 설정되는 SecurityManager
 # 5. 문자열 클래스
 # 6. 포장 클래스
 # 7. 수학 클래스
