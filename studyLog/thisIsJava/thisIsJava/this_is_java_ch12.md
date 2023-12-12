@@ -133,12 +133,184 @@ public class Person {
 - 운영체제는 실행 중인 프로그램을 프로세스로 관리: 자바 프로그램 시작 -> JVM 프로세스 실행 -> main() 메소드를 호출
   - 프로세스를 강제 종료하고 싶다면 `System.exit(int status)` 메소드를 사용
   - 종료 상태값인 int 매개값이 필요: 정상종료(0), 비정상 종료(1, -1)
-> 종료 상태값은 System에 설정되는 SecurityManager
+> Java17 전까지는 종료 상태값은 System에 설정되는 SecurityManager에서 활용됨. 종료 상태값에 따라 특정 행위를 하도록 코딩 가능
+## 진행 시간 읽기
+- System클래스의 `currentTimeMillis()`메소드 - $1/1000$초 단위 - , `nanoTime()`메소드 - $1/10^9$초 단위 - 는 1970년 1월 1일 0시부터 시작해서 현재까지 진행된 시간을 리턴
+- 프로그램 처리 시간을 측정 시 주로 사용됨: 프로그램 처리를 시작할 때 한번, 끝날 때 한번 읽어서 그 차이를 구함
+## 시스템 프로퍼티 읽기
+- 시스템 프로퍼티 System Property: 자바 프로그램이 시작될 때 자동 설정되는 시스템의 속성(운영체제 종류 및 사용자 정보, 자바 버전 등의 기본 사양 정보)
+- 속성이름(key)와 값에 대한 설명
+  - java.specification.version: 자바 스펙 버전
+  - java.home: JDK 디렉토리 경로
+  - os.name: 운영체제
+  - user.name: 사용자 이름
+  - user.home: 사용자 홈 디렉토리 경로
+  - user.dir: 현재 디렉토리 경로
+- `System.getProperty`
 # 5. 문자열 클래스
+- String: 문자열을 저장 및 조작할 때 사용
+- StringBuilder: 효율적인 문자열 조작 기능이 필요할 때 사용
+- StringTokenizer: 구분자로 연결된 문자열을 분리 시 사용
+## String 클래스
+1. 문자열 리터럴은 자동으로 String 객체로 생성됨
+2. String 클래스의 다양한 생성자를 이용해 직접 객체 생성 가능
+- byte 배열을 문자열로 변환하는 경우
+`String str = new String(byte[] bytes); //기본 문자셋으로 디코딩`  
+`String str = new String(byte[] bytes, String charsetName); //특정 문자셋으로 디코딩`
+## StringBuiler 클래스
+- `String data = "ABC"; data += "DEF";`: 내부 문자열을 수정x, 새로운 String 객체를 생성하여 data변수의 참조가 변경됨.
+- 문자열의 +연산: 새로운 String 객체가 생성, 이전 객체는 버려짐 -> 효율이 좋지 않음
+- StringBuilder를 사용: 내부 버퍼에 문자열을 저장해두고 그 안에서 추가/수정/삭제 작업을 하도록 설계
+  - `StringBuilder append(기본값 | 문자열)`: 문자열을 끝에 추가
+  - `StringBuilder insert(위치, 기본값 | 문자열)`: 문자열을 지정 위치에 추가
+  - `StringBuilder delete(시작 위치, 끝 위치)`: 문자열 일부를 삭제
+  - `StringBuilder replace(시작 위치, 끝 위치, 문자열)`: 문자열 일부를 대체
+  - `String toString()`: 완성된 문자열을 리턴
+- StringBuilder의 대부분 메소드는 StringBuilder를 다시 리턴하기 때문에 연이어 다른 메소드를 호출 가능(메소드 체이닝 패턴)
+## StringTokenizer 클래스
+- 구분자로 연결된 문자열 -> 구분자를 기준으로 분리하려면
+  - String.split() 메소드 이용 - 정규표현식으로 구분
+  - java.util.StringTokenizer 클래스를 이용 - 문자로 구분
+- 여러 종류의 구분자가 있는 문자열의 경우 split()을 이용, 한 종류의 구분자만 있는 문자열의 경우 StringTokenizer를 사용 가능(객체 생성시 첫번째 매개값=전체 문자열, 두번째 매개값=구분자)
+```java
+String data = "홍길동&이수홍,박연수,김자바-최명호";
+String[] names = data.split("&|,|-");
+
+String data = "홍길동/이수홍/박연수";
+StringTokenizer st = new StringTokenizer(data, "/");
+```
+- StringTokenizer 객체의 메소드
+  - `int countTokens()`: 분리할 수 있는 문자열의 총 수
+  - `boolean hasMoreTokens()`: 남아있는 문자열이 있는지 여부
+  - `String nextToken()`: 문자열을 하나씩 가져옴, 더 이상 가져올 문자열이 없다면 예외를 발생시킴
 # 6. 포장 클래스
+- 포장 객체: 기본 타입(byte, char, short, int, long, float, double, boolean)의 값을 갖는 객체
+- 포장 객체를 생성하기 위한 클래스: java.lang 패키지에 포함
+  - byte -> Byte
+  - char -> Character
+  - short -> Short
+  - int -> Integer
+  - long -> Long
+  - float -> Float
+  - double -> Double
+  - boolean -> Boolean
+- 포장 객체는 값을 변경 불가, 단지 객체로의 생성에 목적이 있음 -> 컬렉션 객체(기본 타입의 값은 저장불가)에 저장 가능
+## 박싱과 언박싱
+- 박싱: 기본 타입의 값을 포장 객체로 만드는 과정 `포장클래스 변수 = 기본타입값`
+- 언박싱: 포장 객체에서 기본 타입의 값을 얻어내는 과정 `기본타입 변수 = 포장객체`
+  - 연산과정에서도 발생. ex `int value = obj + 50;`
+## 문자열을 기본 타입 값으로 변환
+- 포장 클래스: 문자열을 기본 타입 값으로 변환 시 사용
+  - 대부분의 포장 클래스에 존재하는 `parse기본타입명`으로 된 정적 메소드: 문자열을 해당 기본 타입 값으로 변환
+## 포장 값 비교
+- 포장 객체는 내부 값을 비교하기 위해 `==`,`!=` 연산자를 사용시 포장 객체의 번지를 비교하게 됨.
+  - 포장 객체가 공유되는 값의 범위 -> 비교 연산자로 비교 가능
+    - boolean(true, false)
+    - char(\u0000 ~ \u007f)
+    - byte, short, int(-128 ~ 127)
+- 포장 객체에 어떤 값이 저장될지 모르는 상황 -> equals() 메소드로 내부 값을 비교
+  - 포장 클래스의 equals() 메소드는 내부의 값을 비교하도록 재정의되어 있음
 # 7. 수학 클래스
+- Math 클래스: 수학 계산에 사용할 수 있는 메소드(static)를 제공
+  - 절대값: Math.abs();
+  - 올림값: Math.ceil();
+  - 버림값: Math.floor();
+  - 최대값: Math.max();
+  - 최소값: Math.min();
+  - 랜덤값: Math.random();
+    - 0.0 ~ 1.0 사이의 double 타입 난수를 리턴
+    - start부터 시작하는 n개의 정수 중 하나의 정수를 얻기 위한 공식: `int num = (int) (Math.random() * n) + start;`
+  - 반올림값: Math.round();
+- 난수를 얻는 또 다른 방법: `java.util.Random` 클래스 이용
+  - Random 객체의 생성자
+    - Random(): 현재 시간을 이용해서 시드값을 자동 설정
+    - Random(long seed): 주어진 시드값을 사용
+  - Random 클래스의 메소드
+    - `boolean nextBoolean()`: boolean 타입의 난수를 리턴
+    - `double nextDouble()`: double 타입의 난수를 리턴
+    - `int nextInt()`: int 타입의 난수를 리턴($-2^{32}$ ~ $2^{32}-1$)
+    - `int nextInt(int n)`: int 타입의 난수를 리턴(0<= ~ <n)
 # 8. 날짜와 시간 클래스
+- java.util 패키지에서 Date(날짜 정보 전달), Calendar(다양한 시간대별로 날짜와 시간을 얻을때) 클래스를 제공
+- java.time 패키지에서 LocalDateTime(날짜와 시간을 조작) 클래스 제공
+## Date 클래스
+- 날짜를 표현하는 클래스, 객체 간에 날자 정보를 주고받을 때 사용
+- 여러 개의 생성자; 대부분 Deprecated, Date() 생성자 -컴퓨터의 현재 날짜를 읽어 Date 객체로 만듦- 만 주로 사용  
+`Date now = new Date()`
+- 현재 날짜를 문자열로 얻고 싶다면
+  - toString(): 영문으로 출력
+  - SimpleDateFormat 클래스와 함께 사용
+## Calendar 클래스
+- 달력을 표현하는 추상 클래스 
+  - 날짜와 시간을 계산하는 방법이 지역/문화에 따라 다르기 때문에 특정 역법을 따르는 달력은 자식 클래스에서 구현
+  - 특별한 역법을 사용하는 경우가 아닐때 -> Calendar 클래스의 정적 메소드 getInstance() 메소드를 이용해 컴퓨터에 설정되어 있는 시간대를 기준으로 하위 객체를 얻음  
+  `Calendar now = Calendar.getInstance();`
+    - Calendar 객체가 제공하는 날짜와 시간에 대한 정보를 얻기 위해서 get() 메소드를 이용, 매개값으로 Calendar에 정의된 상수를 전달(YEAR, MONTH, DAY_OF_MONTH, DAY_OF_WEEK, AM_PM, HOUR, MINUTE, SECOND)
+  - Calendar 클래스의 오버로딩된 다른 getInstance() 메소드를 이용하여, 알고 싶은 시간대의 TimeZone 객체를 얻어 매개값으로 넘겨주면 됨.  
+  `TimeZone timeZone = TimeZone.getTimeZone("America/Los_Angeles");`  
+  `Calendar now = Calendar.getInstance(timeZone);`
+## 날짜와 시간 조작
+- `Date`, `Calendar`는 날짜/시간 정보 획득 가능; 조작은 불가 -> `java.time.LocalDateTime` 클래스의 메소드를 이용
+  - `minusYears(long)`: 년 빼기
+  - `minusMonths(long)`: 월 빼기
+  - `minusDays(long)`: 일 빼기
+  - `minusWeeks(long)`: 주 빼기
+  - `plusYears(long)`: 년 더하기
+  - `plusMonths(long)`: 월 더하기
+  - `plusWeeks(long)`: 주 더하기
+  - `plusDays(long)`: 일 더하기
+  - `minusHours(long)`: 시간 빼기
+  - `minusMinutes(long)`: 분 빼기
+  - `minusSeconds(long)`: 초 빼기
+  - `minusNanos(long)`: 나노초 빼기
+  - `plusHours(long)`: 시간 더하기
+  - `plusMinutes(long)`: 분 더하기
+  - `plusSeconds(long)`: 초 더하기
+- `LocalDateTime now = LocalDateTime.now()`: LocalDateTime 클래스를 이용해 현재 컴퓨터의 날짜와 시간을 얻는 법  
+## 날짜와 시간 비교
+- `LocalDateTime` 클래스의 날짜/시간 비교 메소드
+  - `boolean isAfter(other)`: 이후 날짜인지?
+  - `boolean isBefore(other)`: 이전 날짜인지?
+  - `boolean isEqual(other)`: 동일 날짜인지?
+  - `long until(other, unit)`: 주어진 단위 unit 차이를 리턴
+- `LocalDateTime target = LocalDateTime.of(year, month, dayOfMonth, hour, minute, second);`: 비교를 위해 특정 날짜/시간으로 LocalDateTime 객체를 얻는 방법(매개값은 int타입 값으로 제공)
 # 9. 형식 클래스
+- `java.text` 패키지에 포함된 Format 클래스: 숫자 또는 날짜를 원하는 형태의 문자열로 변환해주는 기능을 제공
+  - `DecimalFormat`: 숫자를 형식화된 문자열로 변환
+  - `SimpleDateFormat`: 날짜를 형식화된 문자열로 변환
+## DecimalFormat
+- 숫자를 형식화된 문자열로 변환하는 기능을 제공
+- 원하는 형식으로 표현하기 위해 패턴을 사용
+  - 0: 10진수(빈자리는 0으로 채움)
+  - #: 10진수(빈자리는 채우지 않음)
+  - .: 소수점
+  - -: 음수 기호
+  - ,: 단위 구분
+  - E: 지수 문자
+  - ;: 양수와 음수의 패턴을 기술할 경우의 패턴 구분자
+  - %: %문자
+  - \u00A4: 통화 기호
+- DecimalFormat 객체의 `format()` 메소드로 숫자를 제공하여 사용.
+## SimpleDateFormat
+- 날짜를 형식화된 문자열로 변환하는 기능을 제공
+- 원하는 형식으로 표현하기 위해 패턴을 사용
+  - y: 년
+  - M: 월
+  - d: 일
+  - D: 월 구분이 없는 일(1~365)
+  - E: 요일
+  - a: 오전/오후
+  - w: 년의 몇 번째 주
+  - W: 월의 몇 번째 주
+  - H: 시(0~23)
+  - h: 시(1~12)
+  - K: 시(0~11)
+  - k: 시(1~24)
+  - m: 분
+  - s: 초
+  - S: 밀리세컨드(1/1000초)
+- 패턴: 자릿수에 맞게 기호를 반복해서 작성 가능
+
 # 10. 정규 표현식 클래스
 # 11. 리플렉션
 # 12. 어노테이션
