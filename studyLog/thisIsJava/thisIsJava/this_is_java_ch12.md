@@ -354,4 +354,9 @@ StringTokenizer st = new StringTokenizer(data, "/");
   - `Method[] getDeclaredMethods()`: 메소드 정보 읽기
 - Constructor, Field, Method 클래스는 모두 java.lang.reflect 패키지에 있음. 
   - 각각 생성자, 필드, 메소드에 대한 선언부 정보를 제공
+## 리소스 경로 얻기
+- Class 객체: 클래스 파일(.class)의 경로 정보를 가지고 있음.  
+-> 이 경로를 기준으로 상대 경로에 있는 다른 리소스 파일의 정보를 얻을 수 있음
+  - `URL getResource(String name)`: 리소스 파일의 URL 리턴
+  - `InputStream getResourceAsStream(String name)`: 리소스 파일의 Input
 # 12. 어노테이션
