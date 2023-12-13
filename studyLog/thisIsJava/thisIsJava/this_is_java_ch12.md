@@ -336,4 +336,22 @@ StringTokenizer st = new StringTokenizer(data, "/");
 - java.util.regex 패키지의 Pattern 클래스의 matches() 메소드: 정규표현식으로 문자열을 검증  
 `boolean result = Pattern.matches("정규식", "검증할 문자열");`
 # 11. 리플렉션
+- 자바는 클래스, 인터페이스의 메타 정보(패키지 정보, 타입 정보, 멤버-생성자, 필드, 메소드- 정보 등)를 Class 객체로 관리함.
+- 리플렉션 reflection: 메타 정보를 프로그앰에서 읽고 수정하는 행위
+- 프로그램에서 Class 객체를 얻는 방법
+  - 1. 클래스이름: `Class clazz = 클래스이름.class`
+  - 2. 클래스이름: `Class clazz = Class.forName("패키지...클래스이름");`
+  - 3. 객체참조변수: `Class clazz = 객체참조변수.getClass();`
+## 패키지와 타입 정보 얻기
+- 패키지와 타입(클래스, 인터페이스) 이름 정보를 얻는 메소드
+  - `Package getPackage()`: 패키지 정보 읽기
+  - `String getSimpleName()`: 패키지를 제외한 타입 이름
+  - `String getName()`: 패키지를 포함한 전체 타입 이름
+## 멤버 정보 얻기
+- 타입(클래스, 인터페이스)가 가지고 있는 멤버 정보를 얻는 메소드
+  - `Constructor[] getDeclaredConstructors()`: 생성자 정보 읽기
+  - `Field[] getDeclaredFields()`: 필드 정보 읽기
+  - `Method[] getDeclaredMethods()`: 메소드 정보 읽기
+- Constructor, Field, Method 클래스는 모두 java.lang.reflect 패키지에 있음. 
+  - 각각 생성자, 필드, 메소드에 대한 선언부 정보를 제공
 # 12. 어노테이션
