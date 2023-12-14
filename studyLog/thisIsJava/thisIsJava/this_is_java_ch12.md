@@ -357,6 +357,74 @@ StringTokenizer st = new StringTokenizer(data, "/");
 ## 리소스 경로 얻기
 - Class 객체: 클래스 파일(.class)의 경로 정보를 가지고 있음.  
 -> 이 경로를 기준으로 상대 경로에 있는 다른 리소스 파일의 정보를 얻을 수 있음
-  - `URL getResource(String name)`: 리소스 파일의 URL 리턴
-  - `InputStream getResourceAsStream(String name)`: 리소스 파일의 Input
+  - `URL getResource(String name)`: 리소스 파일의 URL(객체) 리턴
+  - `InputStream getResourceAsStream(String name)`: 리소스 파일의 InputStream(객체) 리턴
 # 12. 어노테이션
+- 어노테이션: 코드에서 @으로 작성되는 요소. 클래스 또는 인터페이스를 컴파일하거나 실행할 때 어떻게 처리해야 할 것인지를 알려주는 설정 정보
+  1. 컴파일 시 사용하는 정보 전달
+  2. 빌드 툴이 코드를 자동으로 생성할 때 사용하는 정보 전달
+  3. 실행 시 특정 기능을 처리할 때 사용하는 정보 전달
+## 어노테이션 타입 정의와 적용
+- 어노테이션도 하나의 타입 -> 사용하기 위해서 정의가 필요 (~=인터페이스 정의와 유사)
+`public @interface AnnotationName { }` -> `@AnnotationName`으로 코드에서 사용됨
+- 어노테이션은 속성(타입과 이름으로 구성)을 가질 수 있음. 
+  - 속성의 기본값은 default 키워드로 지정.
+  - 기본 속성: value -> 코드에서 단독 사용 시 값만 기술(다른 속성과 함께 기술 시 속성이름을 명시)
+```java
+public @interface AnnotationName {
+    String value();
+    String prop1();
+    int prop2() default 1;
+}
+
+//어노테이션의 속성을 코드에서 사용할 때
+@AnnotationName(prop1="값");
+@AnnotationName(prop1="값", prop2=3);
+@AnnotationName("값");
+@AnnotationName(value="값", prop2=3);
+```
+## 어노테이션 적용 대상
+- 설정 정보의 대상을 명시해야함 -> 적용할 수 있는 대상의 종류는 ElementType 열거 상수로 정의되어 있음.
+  - `TYPE`: 클래스, 인터페이스, 열거 타입
+  - `ANNOTATION_TYPE`: 어노테이션
+  - `FIELD`: 필드
+  - `CONSTRUCTOR`: 생성자
+  - `METHOD`: 메소드
+  - `LOCAL_VARIABLE`: 로컬 변수
+  - `PACKAGE`: 패키지
+- 적용 대상을 지정 시 `@Target` 어노테이션을 사용, `@Target`의 기본 속성인 value는 ElementType 배열을 값으로 가짐.
+```java
+//클래스, 필드, 메소드에만 적용 가능한 어노테이션 정의
+@Target( {ElementType.TYPE, ElementType.FIELD, ElementType.METHOD} )
+public @interface AnnotationName {
+}
+
+@AnnotationName
+public class ClassName {
+    @AnnotationName
+    private String fieldName;
+
+    //@AnnotationName
+    public ClassName() { }
+
+    @AnnotationName
+    public void methodName() { }
+}
+```
+## 어노테이션 유지 정책
+- 어노테이션 유지 정책: @AnnotationName을 언제까지 유지할 것인지 지정 -> RetentionPolicy 열거 상수
+  - `SOURCE`: 컴파일할 때 적용, 컴파일된 후에 제거됨
+  - `CLASS`: 메모리로 로딩할 때 적용, 메모리로 로딩된 후에 제거됨
+  - `RUNTIME`: 실행할 때 적용, 계속 유지됨
+- 유지 정책 지정 시 `@Retention` 어노테이션을 사용, `@Retention`의 기본 속성인 value는 RetentionPolicy 열거 상수 값을 가짐.
+```java
+@Target( {ElementType.TYPE, ElementType.FIELD, ElementType.METHOD} )
+@Retention( RetentionPolicy.RUNTIME )
+public @interface AnnotationName {
+}
+```
+## 어노테이션 설정 정보 이용
+- 설정 정보를 이용해 처리할 지는 애플리케이션의 몫 -> 리플렉션을 이용해 적용 대상으로부터 어노테이션 정보를 얻어내기 가능
+  - `boolean isAnnotationPresent(AnnotationName.class)`: 지정한 어노테이션이 적용되었는지 여부
+  - `Annotation getAnnotation(AnnotationName.class)`: 지정한 어노테이션이 적용된 경우 어노테이션을 리턴, 그렇지 않다면 null을 리턴
+  - `Annotation[] getDeclaredAnnotations()`: 적용된 모든 어노테이션을 리턴
