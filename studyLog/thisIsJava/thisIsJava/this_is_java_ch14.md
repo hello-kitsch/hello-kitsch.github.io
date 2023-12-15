@@ -37,7 +37,19 @@ Thread thread = new Thread( new Runnable() {
     }
 });
 ```
-- 
+- 작업 스레드 생성 후 start()메소드를 호출해야 실행됨.
+## Thread 자식 클래스로 생성
+- Thread 클래스를 상속한 후 run() 메소드를 재정의하여 스레드가 실행할 코드를 작성, 객체 생성
+```java
+public class WorkerThread extends Thread {
+    @Override
+    public void run() {
+        //스레드가 실행할 코드
+    }
+}
+Thread thread = new WorkerThread();
+thread.start();
+```
 # 4. 스레드 이름
 # 5. 스레드 상태
 # 6. 스레드 동기화
