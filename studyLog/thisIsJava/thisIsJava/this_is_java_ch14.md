@@ -49,8 +49,26 @@ public class WorkerThread extends Thread {
 }
 Thread thread = new WorkerThread();
 thread.start();
+
+//Thread 익명 자식 객체를 사용하는 경우
+Thread thread = new Thread() {
+    @Override
+    public void run() {
+        //스레드가 실행할 코드
+    }
+};
+thread.start();
 ```
 # 4. 스레드 이름
+- 스레드는 자신의 이름을 가지고 있음. 
+  - 메인 스레드: `main`
+  - 작업 스레드는 자동적으로 `Thread-n`, 다른 이름으로 설정하고 싶다면 setName() 메소드를 사용
+  `thread.setName("스레드 이름");`
+- 스레드 이름은 디버깅 시 어떤 스레드가 작업을 하는지 조사할 때 사용됨 -> 정적 메소드인 currentThread()로 스레드 객체의 참조를 얻은 후 getName() 메소드로 이름 출력
+```java
+Thread thread = Thread.currentThread();
+System.out.println(thread.getName());
+```
 # 5. 스레드 상태
 # 6. 스레드 동기화
 # 7. 스레드 안전 종료
