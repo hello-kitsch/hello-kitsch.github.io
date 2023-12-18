@@ -70,7 +70,78 @@ Thread thread = Thread.currentThread();
 System.out.println(thread.getName());
 ```
 # 5. 스레드 상태
+- 스레드 객체를 생성(`new`), `start()`메소드 호출 시, 실행대기상태`RUNNABLE`가 됨.
+- RUNNABLE 상태에서 CPU 스케줄링에 따라 CPU 점유 및 `run()`메소드 실행 -> `RUNNING`
+  - `run()`메소드를 모두 실행하기 전에 스케줄링에 의해 다시 RUNNABLE 상태로 돌아갈 수 있음.
+  - 실행 상태에서 일시정지 상태(스레드가 실행할 수 없는 상태)로 가기도 함.
+- RUNNABLE 상태와 RUNNING 상태를 번갈아가며 `run()`메소드를 실행하고 종료되면 스레드의 실행은 멈춤 -> `TERMINATED`
+- 일시정지상태 -> 실행대기상태 -> 실행상태
+  - 실행 -> 일시정지
+    - `sleep(long millis)`: 주어진 시간 동안 스레드를 일시 정지 상태로 만듦. 주어진 시간이 지나면 자동적으로 실행 대기 상태가 됨. **Thread 클래스의 메소드**
+    - `join()`: join() 메소드를 호출한 스레드는 일시 정지 상태가 됨. 실행 대기 상태가 되려면 join() 메소드를 가진 스레드가 종료되어야함. **Thread 클래스의 메소드**
+    - `wait()`: 동기화 블록 내에서 스레드를 일시 정지 상태로 만듦. **Object 클래스의 메소드**
+  - 일시정지 -> 실행대기/종료
+    - `interrupt()`: 일시정지 상태일 경우, InterruptedException을 발생시켜 실행대기/종료 상태로 만듦. **Thread 클래스의 메소드**
+    - `notify()`, `notifyAll()`: wait()메소드로 인해 일시정지 상태인 스레드를 실행대기 상태로 만듦. **Object 클래스의 메소드** 
+  - 실행 -> 실행대기
+    - `yield()`: 실행 상태에서 다른 스레드에게 실행을 양보하고 실행 대기 상태가 됨. **Thread 클래스의 메소드**
+## 주어진 시간 동안 일시 정지
+- `sleep(long millis)`: 실행 중인 스레드를 일정 시간 멈추게 하고 싶을 때 사용, 매개값에는 얼마동안 일시 정지 상태로 있을 것인지.
+  - 일시 정지 상태에서는 InterruptedException이 발생할 수 있기 때문에 sleep()은 예외 처리가 필요한 메소드.
+```java
+try {
+    Thread.sleep(1000);
+} catch(InterruptedException e) {
+    //interrupt() 메소드가 호출되면 실행
+}
+```
+## 다른 스레드의 종료를 기다림
+- `join()`: 스레드는 다른 스레드와 독립적으로 실행; 다른 스레드가 종료될 때까지 기다렸다가 실행을 해야하는 경우 사용.
+```java
+//threadA 안
+threadB.start(); //threadB.run() { ... }
+threadB.join(); //threadA 일시정지, threadB의 run() 메소드가 종료되어야 일시정지에서 풀림
+```
+## 다른 스레드에게 실행 양보
+- 스레드가 처리하는 작업은 반복 실행(for문, while문)을 포함하는 경우가 많음, 무의미한 반복을 하는 경우 실행 양보 후 실행 대기 상태로 가야 성능에 도움이 됨. -> `yield()`메소드 사용
+```java
+//무의미한 반복
+public void run() {
+    while(true) {
+        if(work) {
+            System.out.println("ThreadA 작업 내용");
+        }
+    }
+}
+
+//무의미한 반복X, 실행 양보
+public void run() {
+    while(true) {
+        if(work) {
+            System.out.println("ThreadA 작업 내용");
+        } else {
+            Thread.yield();
+        }
+    }
+}
+```
 # 6. 스레드 동기화
+- 멀티 스레드는 하나의 객체를 공유해서 작업 가능 -> 다른 스레드에 의해 객체 내부 데이터가 쉽게 변경 가능 -> 의도한 것과 다른 결과 발생 가능
+- 자바의 동기화 synchronized 메소드/블록: 스레드가 사용 중인 객체를 다른 스레드가 변경할 수 없도록 하기 위해 스레드 작업이 끝날 때까지 잠금을 거는 것.
+  - 객체 내부에 동기화 메소드/블록이 여러 개 있다면 이들 하나가 스레드에서 실행 중일 때 다른 스레드는 그러한 동기화 메소드/블록을 실행 불가(일반 메소드는 실행 가능)
+## 동기화 메소드 및 블록 선언
+- 동기화 메소드를 선언하는 법: `synchronized`키워드 붙이기 (인스턴스, 정적 메소드 어디든 가능)
+`public synchronized void method() { //단 하나의 스레드만 실행하는 영역 }`
+- 메소드 전체가 아닌 일부 영역을 실행할 때만 객체 잠금 -> 동기화 블록을 선언
+```java
+public void method() {
+    //여러 스레드가 실행할 수 있는 영역
+    synchronized(공유객체) {
+        //단 하나의 스레드만 실행하는 영역
+    }
+    //여러 스레드가 실행할 수 있는 영역
+}
+```
 # 7. 스레드 안전 종료
 # 8. 데몬 스레드
 # 9. 스레드풀
