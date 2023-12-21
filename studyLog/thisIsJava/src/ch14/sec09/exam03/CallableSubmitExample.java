@@ -18,8 +18,19 @@ public class CallableSubmitExample {
                     for(int i=1; i<=idx; i++) {
                         sum += i;
                     }
+                    Thread thread = Thread.currentThread();
+                    System.out.println("[" + thread.getName() + "] 1~" + idx + " 합 계산");
+                    return sum;
                 }
             });
+
+            try {
+                int result = future.get();
+                System.out.println("\t리턴값: " + result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        executorService.shutdown();
     }
 }
