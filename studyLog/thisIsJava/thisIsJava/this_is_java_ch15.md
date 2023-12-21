@@ -31,9 +31,19 @@ Map||키와 값으로 구성된 엔트리 저장/키는 중복 저장 안됨|Has
   - 동일한 객체를 중복 저장 가능(동일한 번지가 저장됨)
   - null 저장 가능
 ```java
-List<E> list = new ArrayList<E>();
-List<E> list = new ArrayList<>();
-List list = new ArrayList();
+List<E> list = new ArrayList<E>(); //타입 파라미터 E에는 ArrayList에 저장하고 싶은 객체 타입을 지정
+List<E> list = new ArrayList<>(); //List에 지정한 객체 타입과 동일하다면 뒤에는 생략 가능
+List list = new ArrayList(); //객체 타입을 모두 생략하면 모든 종류의 객체를 저장 가능
+```
+- 객체 추가 시 인덱스 0번부터 차례로 저장됨
+- 객체 제거 시 뒤 인덱스부터 마지막 인덱스까지 모두 앞으로 1씩 당겨짐 -> 빈번한 객체 삭제/삽입이 일어나는 곳에서는 ArrayList를 사용 자제
+## Vector
+- ArrayList와 동일한 내부 구조; 
+- 동기화된 메소드로 구성되어 있어 멀티 스레드가 동시에 Vector() 메소드를 실행 불가 -> 멀티 스레드 환경에서 안전하게 객체를 추가/삭제 가능
+```java
+List<E> list = new Vector<E>(); //타입 파라미터 E에는 Vector에 저장하고 싶은 객체 타입을 지정
+List<E> list = new Vector<>(); //List에 지정한 객체 타입과 동일하다면 뒤에는 생략 가능
+List list = new Vector(); //객체 타입을 모두 생략하면 모든 종류의 객체를 저장 가능
 ```
 # 3. Set 컬렉션
 # 4. Map 컬렉션
