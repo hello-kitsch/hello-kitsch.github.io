@@ -58,10 +58,10 @@ List list = new LinkedList(); //객체 타입을 모두 생략하면 모든 타�
 # 3. Set 컬렉션
 - List 컬렉션과 달리 저장 순서 유지X
 - 객체 중복 저장 불가, 하나의 null만 저장 가능
-- Set 컬렉션: HashSet, LinkedHashSet, TreeSet 등
+- Set 컬렉션: HashSet, LinkedHashSet, TreeSet 등(인덱스를 관리X)
 - Set 인터페이스의 메소드
   - 객체 추가
-    - `boolean add(E e)`: 주어진 객체를 성공적으로 저장하면 true를 리턴, 중복 객체면 false를 리턴\
+    - `boolean add(E e)`: 주어진 객체를 성공적으로 저장하면 true를 리턴, 중복 객체면 false를 리턴
   - 객체 검색
     - `boolean contains(Object o)`: 주어진 객체가 저장되어 있는지 여부
     - `isEmpty()`: 컬렉션이 비어 있는지 조사
@@ -81,7 +81,48 @@ Set set = new HashSet(); //객체 타입을 모두 생략하면 모든 타입의
 - 동일한 객체(동등 객체)는 중복 저장하지 않음. 
   - hashCode() 리턴값과 equals() 리턴값이 모두 같으면 동일한 객체
     - 문자열을 HashSet에 저장 시, 같은 문자열을 갖는 String 객체는 동등한 객체로 간주
+- 인덱스로 객체를 검색해서 가져오는 메소드가 없음 -> 객체를 한 개씩 반복해서 가져와야함.
+  1. for문 이용
+  ```java
+  Set<E> set = new HashSet<>();
+  for(E e : set) {
+      ...
+  }
+  ```
+  2. Set 컬렉션의 iterator() 메소드로 반복자를 얻어 객체를 하나씩 가져옴
+  ```java
+  Set<E> set = new HashSet<>();
+  Iterator<E> iterator = set.iterator();
+  ```
+    - iterator()가 반환하는 Iterator<>가 제공하는 메소드
+      - `boolean hasNext()`: 가져올 객체가 있으면 true, 없으면 false를 리턴
+      - `E next()`: 컬렉션에서 하나의 객체를 가져옴
+      - `void remove()`: next()로 가져온 객체를 Set 컬렉션에서 제거
+  ```java
+  while(iterator.hasNext()) {
+      E e = iterator.next();
+  }
+  ```
 # 4. Map 컬렉션
+- Map 컬렉션: 키와 값(객체)으로 구성된 엔트리 객체를 저장
+  - 키는 중복 저장 불가(기존에 저장된 키와 동일한 키로 저장 시 대치가 이루어짐), 값은 중복 저장 가능
+  - 키와 값을 합쳐서 Map.Entry
+- Map에는 HashMap, Hashtable, LinkedHashMap, Properties, TreeMap 등이 존재. (K: 키 타입 파라미터, V: 값 타입 파라미터)
+  - 객체 추가
+    - `V put(K key, V value)`: 주어진 키와 값을 추가, 저장이 되면 값을 리턴
+  - 객체 검색
+    - `boolean containsKey(Object key)`: 주어진 키가 있는지 여부
+    - `boolean containsValue(Object value)`: 주어진 값이 있는지 여부
+    - `Set<Map.Entry<K,V>> entrySet()`: 키와 값의 쌍으로 구성된 모든 Map.Entry 객체를 Set에 담아서 리턴
+    - `V get(Object key)`: 주어진 키의 값을 리턴
+    - `boolean isEmpty()`: 컬렉션이 비어있는지 여부
+    - `Set<K> keySet()`: 모든 키를 Set 객체에 담아서 리턴
+    - `int size()`: 저장된 키의 총 수를 리턴
+    - `Collection<V> values()`: 저장된 모든 값 Collection에 담아서 리턴
+  - 객체 삭제
+    - `void clear()`: 모든 Map.Entry(키와 값)를 삭제
+    - `V remove(Object key)`: 주어진 키와 일치하는 Map.Entry 삭제, 삭제되면 값을 리턴
+
 # 5. 검색 기능을 강화시킨 컬렉션
 # 6. LIFO와 FIFO 컬렉션
 # 7. 동기화된 컬렉션
