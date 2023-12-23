@@ -132,6 +132,13 @@ Map<String, Integer> map = new HashMap<String, Integer>();
 Map<String, Integer> map = new HashMap<>();
 Map map = new HashMap(); //모든 타입의 키와 객체를 저장 가능하도록 HashMap을 생성은 가능; 거의 없는 경우임.
 ```
+## Hashtable
+- HashMap과 동일한 내부 구조; 동기화된 메소드로 구성됨 -> 멀티 스레드가 동시에 Hashtable의 메소드들을 실행 불가 -> 멀티 스레드 환경에서도 안전하게 객체 추가 및 삭제 가능
+```java
+Map<String, Integer> map = new Hashtable<String, Integer>();
+Map<String, Integer> map = new Hashtable<>();
+Map map = new Hashtable(); //모든 타입의 키와 객체를 저장 가능; 거의 사용하지 않음
+```
 
 # 5. 검색 기능을 강화시킨 컬렉션
 # 6. LIFO와 FIFO 컬렉션
