@@ -122,6 +122,16 @@ Set set = new HashSet(); //객체 타입을 모두 생략하면 모든 타입의
   - 객체 삭제
     - `void clear()`: 모든 Map.Entry(키와 값)를 삭제
     - `V remove(Object key)`: 주어진 키와 일치하는 Map.Entry 삭제, 삭제되면 값을 리턴
+## HashMap
+- HashMap은 키로 사용할 객체가 
+  - `hashCode()`메소드와 리턴값이 같고 
+  - `equals()`메소드가 true를 리턴 시, 동일 키로 보고 중복 저장 허용X
+- HashMap 컬렉션을 생성하는 방법: `Map<K, V> map = new HashMap<K, V>();`
+```java
+Map<String, Integer> map = new HashMap<String, Integer>();
+Map<String, Integer> map = new HashMap<>();
+Map map = new HashMap(); //모든 타입의 키와 객체를 저장 가능하도록 HashMap을 생성은 가능; 거의 없는 경우임.
+```
 
 # 5. 검색 기능을 강화시킨 컬렉션
 # 6. LIFO와 FIFO 컬렉션
