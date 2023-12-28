@@ -166,8 +166,11 @@ TreeSet<E> treeSet = new TreeSet<>();
   - `E higher(E e)`: 주어진 객체보다 바로 위 객체를 리턴
   - `E floor(E e)`: 주어진 객체와 동등한 객체가 있다면 리턴, 없다면 주어진 객체의 바로 아래의 객체를 리턴
   - `E ceiling(E e)`: 주어진 객체와 동등한 객체가 있으면 리턴, 없다면 주어진 객체의 바로 위의 객체를 리턴
+  - `E pollFirst()`: 제일 낮은 객체를 꺼내오고 컬렉션에서 제거함
+  - `E pollLast()`: 제일 높은 객체를 꺼내오고 컬렉션에서 제거함
+  - `Iterator<E> descendingIterator()`: 내림차순으로 정렬된 Iterator를 리턴
+  - `NavigableSet<E> descendingSet()`: 내림차순으로 정렬된 NavigableSet을 리턴
+  - `NavigableSet<E> headSet(E toElement, boolean inclusive)`: 주어진 객체보다 낮은 객체들을 NavigableSet으로 리턴
 # 6. LIFO와 FIFO 컬렉션
 # 7. 동기화된 컬렉션
 # 8. 수정할 수 없는 컬렉션
-
-죽으면 끝날까 이 모든게
