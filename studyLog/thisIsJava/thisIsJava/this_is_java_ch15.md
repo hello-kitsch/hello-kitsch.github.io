@@ -139,8 +139,35 @@ Map<String, Integer> map = new Hashtable<String, Integer>();
 Map<String, Integer> map = new Hashtable<>();
 Map map = new Hashtable(); //모든 타입의 키와 객체를 저장 가능; 거의 사용하지 않음
 ```
-
+## Properties
+- Hashtable의 자식 클래스 -> Hashtable의 특징을 그대로 가지고 있음.
+- Properties는 키와 값을 String 타입으로 제한한 컬렉션. 확장자가 `.properties`인 프로퍼티 파일을 읽을 때 사용
+  - 프로퍼티 파일: 키와 값이 `=`기호로 연결되어 있는 텍스트 파일
+    - ISO 8859-1 문자셋으로 저장됨, 한글의 경우 \u+유니코드로 표현되어 저장됨.
+- `Properties`을 사용 시 프로퍼티 파일의 내용을 코드에서 쉽게 읽을 수 있음
+```java
+Properties properties = new Properties(); //Properties 객체를 생성
+properties.load(Xxx.class.getResourceAsStream("database.properties")); //load() 메소드로 프로퍼티 파일의 내용을 메모리로 로드
+```
+- class 객체의 `getResourceAsStream()`메소드: 주어진 상대 경로의 리소스 파일을 읽는 InputStream을 리턴
 # 5. 검색 기능을 강화시킨 컬렉션
+- 컬렉션 프레임워크는 검색 기능을 강화시킨 TreeSet(Set컬렉션)과 TreeMap(Map컬렉션)을 제공
+## TreeSet
+- 이진 트리(여러 개의 노드가 트리 형태로 연결된 구조, 하나의 노드에서 시작해 각 노드에 최대 2개의 노드를 연결할 수 있는 구조)를 기반으로 한 Set 컬렉션.
+- TreeSet에 객체 저장시 자동으로 정렬됨. 부모 노드의 객체와 비교해 낮은 것은 왼쪽 자식 노드, 높은 것은 오른쪽 자식 노드.
+```java
+TreeSet<E> treeSet = new TreeSet<E>();
+TreeSet<E> treeSet = new TreeSet<>();
+```
+- TreeSet에 정의된 검색 관련 메소드
+  - `E first()`: 제일 낮은 객체를 리턴
+  - `E last()`: 제일 높은 객체를 리턴
+  - `E lower(E e)`: 주어진 객체보다 바로 아래 객체를 리턴
+  - `E higher(E e)`: 주어진 객체보다 바로 위 객체를 리턴
+  - `E floor(E e)`: 주어진 객체와 동등한 객체가 있다면 리턴, 없다면 주어진 객체의 바로 아래의 객체를 리턴
+  - `E ceiling(E e)`: 주어진 객체와 동등한 객체가 있으면 리턴, 없다면 주어진 객체의 바로 위의 객체를 리턴
 # 6. LIFO와 FIFO 컬렉션
 # 7. 동기화된 컬렉션
 # 8. 수정할 수 없는 컬렉션
+
+죽으면 끝날까 이 모든게
