@@ -170,7 +170,24 @@ TreeSet<E> treeSet = new TreeSet<>();
   - `E pollLast()`: 제일 높은 객체를 꺼내오고 컬렉션에서 제거함
   - `Iterator<E> descendingIterator()`: 내림차순으로 정렬된 Iterator를 리턴
   - `NavigableSet<E> descendingSet()`: 내림차순으로 정렬된 NavigableSet을 리턴
-  - `NavigableSet<E> headSet(E toElement, boolean inclusive)`: 주어진 객체보다 낮은 객체들을 NavigableSet으로 리턴
+  - `NavigableSet<E> headSet(E toElement, boolean inclusive)`: 주어진 객체보다 낮은 객체들을 NavigableSet으로 리턴, 주어진 객체 포함 여부는 두 번째 매개값에 따라 달라짐
+  - `NavigableSet<E> tailSet(E fromElement, boolean inclusive)`: 주어진 객체보다 높은 객체들을 NavigableSet으로 리턴, 주어진 객체 포함 여부는 두 번째 매개값에 따라 달라짐
+  - `NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive)`: 시작과 끝으로 주어진 객체 사이의 객체들을 NavigableSet으로 리턴, 시작과 끝 객체의 포함 여부는 두 번째, 네 번째 매개값에 따라 달라짐
+## TreeMap
+- 이진 트리를 기반으로 한 Map 컬렉션
+- TreeSet과의 차이점: 키와 값이 저장된 Entry를 저장함. Entry를 저장 시 키를 기준으로 자동 정렬됨(부모 키 값과 비교하여 낮은 것은 왼쪽, 높은 것은 오른쪽 자식 노드에 Entry 객체를 저장)
+```java
+TreeMap<K, V> treeMap = new TreeMap<K, V>();
+TreeMap<K, V> treeMap = new TreeMap<>();
+```
+- TreeMap 타입에 존재하는 검색 관련 메소드
+  - `Map.Entry<K,V> firstEntry()`: 제일 낮은 Map.Entry를 리턴
+  - `Map.Entry<K,V> lastEntry()`: 제일 높은 Map.Entry를 리턴
+  - `Map.Entry<K,V> lowerEntry(K key)`: 주어진 키보다 바로 아래 Map.Entry를 리턴
+  - `Map.Entry<K,V> higherEntry(K key)`: 주어진 키보다 바로 위 Map.Entry를 리턴
+  - `Map.Entry<K,V> floorEntry(K key)`: 주어진 키와 동등한 키가 있으면 해당 Map.Entry를 리턴, 없다면 주어진 키 바로 아래의 Map.Entry를 리턴
+  - `Map.Entry<K,V> ceilingEntry(K key)`: 주어진 키와 동등한 키가 있으면 해당 Map.Entry를 리턴, 없다면 주어진 키 바로 위의 Map.Entry를 리턴
+  - `Map.Entry<K,V> pollFirstEntry()`: 제일 낮은 Map.Entry를 꺼내오고 컬렉션에서 제거함.
 # 6. LIFO와 FIFO 컬렉션
 # 7. 동기화된 컬렉션
 # 8. 수정할 수 없는 컬렉션
