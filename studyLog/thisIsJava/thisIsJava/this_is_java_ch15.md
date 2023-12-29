@@ -188,6 +188,9 @@ TreeMap<K, V> treeMap = new TreeMap<>();
   - `Map.Entry<K,V> floorEntry(K key)`: 주어진 키와 동등한 키가 있으면 해당 Map.Entry를 리턴, 없다면 주어진 키 바로 아래의 Map.Entry를 리턴
   - `Map.Entry<K,V> ceilingEntry(K key)`: 주어진 키와 동등한 키가 있으면 해당 Map.Entry를 리턴, 없다면 주어진 키 바로 위의 Map.Entry를 리턴
   - `Map.Entry<K,V> pollFirstEntry()`: 제일 낮은 Map.Entry를 꺼내오고 컬렉션에서 제거함.
+  - `Map.Entry<K,V> pollLastEntry()`: 제일 높은 Map.Entry를 꺼내오고 컬렉션에서 제거함
+  - `NavigableSet<K,V> descendingKeySet()`: 내림차순으로 정렬된 키의 NavigableSet을 리턴
+  
 # 6. LIFO와 FIFO 컬렉션
 # 7. 동기화된 컬렉션
 # 8. 수정할 수 없는 컬렉션
