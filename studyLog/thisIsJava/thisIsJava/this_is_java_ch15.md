@@ -190,7 +190,15 @@ TreeMap<K, V> treeMap = new TreeMap<>();
   - `Map.Entry<K,V> pollFirstEntry()`: 제일 낮은 Map.Entry를 꺼내오고 컬렉션에서 제거함.
   - `Map.Entry<K,V> pollLastEntry()`: 제일 높은 Map.Entry를 꺼내오고 컬렉션에서 제거함
   - `NavigableSet<K,V> descendingKeySet()`: 내림차순으로 정렬된 키의 NavigableSet을 리턴
-  
+  - `NavigableMap<K,V> descendingMap()`: 내림차순으로 정렬된 Map.Entry의 NavigableMap을 리턴
+  - `NavigableMap<K,V> headMap(K toKey, boolean inclusive)`: 주어진 키보다 낮은 Map.Entry들을 NavigableMap으로 리턴. 주어진 키의 Map.Entry 포함 여부는 두 번째 매개값에 따라 달라짐
+  - `NavigableMap<K,V> tailMap(K fromKey, boolean inclusive)`: 주어진 키보다 높은 Map.Entry들을 NavigableMap으로 리턴. 주어진 객체 포함 여부는 두 번째 매개값에 따라 달라짐
+  - `NavigableMap<K,V> subMap(K fromKey, boolean fromInclusive, K toKey, boolean toInclusive)`: 시작과 끝으로 주어진 키 사이의 Map.Entry들을 NavigableMap 컬렉션으로 반환. 시작과 끝 키의 Map.Entry 포함 여부는 두 번쨰, 네 번째 매개값에 따라 달라짐.
+## Comparable과 Comparator
+- TreeSet에 저장되는 객체와 TreeMap에 저장되는 키 객체는 저장과 동시에 오름차순으로 정렬(단, **객체가 Comparable 인터페이스를 구현**하고 있어야 가능)
+  - Integer, Double, String 타입은 모두 Comparable을 구현하고 있음
+  - 사용자 정의 객체를 저장 시 반드시 Comparable을 구현해야함.
+- Comparable 인터페이스에는 compareTo() 메소드가 정의되어 있어야함. 
 # 6. LIFO와 FIFO 컬렉션
 # 7. 동기화된 컬렉션
 # 8. 수정할 수 없는 컬렉션
