@@ -198,7 +198,11 @@ TreeMap<K, V> treeMap = new TreeMap<>();
 - TreeSet에 저장되는 객체와 TreeMap에 저장되는 키 객체는 저장과 동시에 오름차순으로 정렬(단, **객체가 Comparable 인터페이스를 구현**하고 있어야 가능)
   - Integer, Double, String 타입은 모두 Comparable을 구현하고 있음
   - 사용자 정의 객체를 저장 시 반드시 Comparable을 구현해야함.
-- Comparable 인터페이스에는 compareTo() 메소드가 정의되어 있어야함. 
+  - Comparable 인터페이스에는 compareTo() 메소드가 정의되어 있어야함 -> 사용자 정의 클래스에서 이 메소드를 재정의해야함 
+    - `int compareTo(T o)`: 주어진 객체와 같으면 0을 리턴, 주어진 객체보다 적으면 음수를 리턴, 주어진 객체보다 크면 양수를 리턴
+- 비교 기능이 없는 Comparable 비구현 객체를 TreeSet/TreeMap에 저장하고 싶다면 **TreeSet과 TreeMap을 생성할 때 비교자를 제공**
+  - `TreeSet<E> treeSet = new TreeSet<E>(new ComparatorImpl());`
+  - 
 # 6. LIFO와 FIFO 컬렉션
 # 7. 동기화된 컬렉션
 # 8. 수정할 수 없는 컬렉션
